@@ -34,8 +34,9 @@ This will create:
 - posts/, the directory where you can put your markdown files for your
 posts
 - blog/, the directory where the HTML files will be created
-- blog/index.html, a blank index page
 - blog/main.css, a simple CSS file for you to modify
+
+An index page in blog/ will be created when you first run sspb new.
 
 ### Modifying template.html
 
@@ -69,13 +70,13 @@ These are some settings you can modify in settings.yaml.
 
 - create-archive
 
-  Leave as True to create an archive page, or set to False and the
+  Leave as yes to create an archive page, or set to no and the
   archive page will not be created.
 
 - home-posts-style
 
-  Set to None to show no posts on the home page, Summary to show post
-  summaries on the home page, or Full to show full posts on the home
+  Set to none to show no posts on the home page, summary to show post
+  summaries on the home page, or full to show full posts on the home
   page. 
 
 - home-max-posts

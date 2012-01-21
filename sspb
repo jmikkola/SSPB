@@ -12,10 +12,10 @@ then
     cmd=$1
     shift
     case $cmd in
-	"start") $DIR/sspb_start.py "$@";;
-	"new")  $DIR/sspb_new.py "$@";;
-	"update") $DIR/sspb_update.py "$@";;
-	"remove") $DIR/sspb_remove.py "$@";;
+	"start") $DIR/sspb_start.py $DIR "$@";;
+	"new")  $DIR/sspb_new.py $DIR "$@";;
+	"update") $DIR/sspb_update.py $DIR "$@";;
+	"remove") $DIR/sspb_remove.py $DIR "$@";;
          *) valid=0;;
     esac
 fi
