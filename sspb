@@ -1,0 +1,30 @@
+#!/bin/bash
+
+# Get the install directory
+DIR="$( cd "$( dirname "$0" )" && pwd )"
+
+# Assume that the input is invalid...
+valid=0
+
+if [ $# -gt 0 ]
+then
+    valid=1
+    cmd=$1
+    shift
+    case $cmd in
+	"start") $DIR/sspb_start.py "$@";;
+	"new")  $DIR/sspb_new.py "$@";;
+	"update") $DIR/sspb_update.py "$@";;
+	"remove") $DIR/sspb_remove.py "$@";;
+         *) valid=0;;
+    esac
+fi
+
+
+if [ $valid = 0 ]
+then
+    echo "Usage: "
+    echo -e "\tsspb <command>"
+    echo ""
+    echo "Commands: start new update remove"
+fi
