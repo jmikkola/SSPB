@@ -31,15 +31,22 @@ directory, and run
     $ sspb start <blog name>
 
 This will create:
+
 - settings.yaml, a settings file containing things like the blog name
+
 - posts.dat, a file where sspb will store information about past posts
+
 - template.html, the page template (more on modifying this later)
+
 - posts/, the directory where you can put your markdown files for your
-posts
+  posts
+
 - blog/, the directory where the HTML files will be created
+
 - blog/main.css, a simple CSS file for you to modify
 
 An index page in blog/ will be created when you first run sspb new.
+
 
 ### Modifying template.html
 
@@ -49,41 +56,42 @@ appropriate value when creating the HTML pages.
 
 You can create any HTML structure you want, just put these tags in
 where you want them:
+
 - $(title} - title of the post or page
+
 - ${name} - the name of the blog
+
 - ${nav} - navigation links. These go to recent posts on the home
-page, or previous posts on entry pages.
+  page, or previous posts on entry pages.
+
 - ${content} - the content of the page. Depending on the type of page,
 this can be one post, many post summaries, or an archive listing of
 links to all pages. 
+
 - ${date} - the date of the post
+
 
 ### Modifying settings.yaml
 
 These are some settings you can modify in settings.yaml. 
 
 - blog-name
-
   Set the name of the blog.
 
 - nav-max-posts
-  
   Set this to 0 to show no posts in the nav links, or to -1 to show
   all posts.
 
 - create-archive
-
   Leave as yes to create an archive page, or set to no and the
   archive page will not be created.
 
 - home-posts-style
-
   Set to none to show no posts on the home page, summary to show post
   summaries on the home page, or full to show full posts on the home
   page. 
 
 - home-max-posts
-
   Set the maximum number of posts to show on the home page. 
 
 
