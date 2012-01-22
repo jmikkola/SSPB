@@ -38,57 +38,55 @@ def getPostName(path):
     return basename.replace(' ', '_')
 
 def makePage(postHtml, title, postName, settings, posts):
+    ''' Create a page for a blog post '''
     date = datetime.now().strftime('%I:%M %p, %B %d, %Y')
     nav = makeNav(settings, posts)
     name = settings.get('blog-name')
-    values = {
-        'content': postHtml,
-        'title':   title,
-        'nav':     nav,
-        'date':    date,
-        'name':    name,
-    }
-    page = getTemplate().safe_substitute(values)
+    page = buildPage(postHtml, title, nav, date, name)
     savePage(page, postName)
 
 def makeIndex(settings, posts):
+    ''' Create the index (home) page '''
     content = makeIndexContent(settings, posts)
     nav = makeNav(settings, posts)
     name = settings.get('blog-name')
-    values = {
-        'content': content,
-        'title':   'Home',
-        'nav':     nav,
-        'date':    '',
-        'name':    name,
-    }
-    page = getTemplate().safe_substitute(values)
+    page = buildPage(content, 'Home', nav, '', name)
     savePage(page, 'index')
 
 def makeIndexContent(settings, posts):
+    ''' Create the content of the index page '''
     return 'index content goes here'
 
 def makeArchive(settings, posts):
+    ''' Create the archive page '''
     content = makeArchiveContent(settings, posts)
     nav = makeNav(settings, posts)
     name = settings.get('blog-name')
-    values = {
-        'content': content,
-        'title':   'Blog archive',
-        'nav':     nav,
-        'date':    '',
-        'name':    name,
-    }
-    page = getTemplate().safe_substitute(values)
+    page = buildPage(content, 'Blog archive', nav, '', name)
     savePage(page, 'archive')
 
 def makeArchiveContent(settings, posts):
+    ''' Create the content of the archive page '''
     return 'archive content goes here'
 
 def makeNav(settings, posts, before=None):
+    ''' Create the navigation links '''
     return 'nav goes here'
 
+def buildPage(content, title, nav, date, name):
+    ''' Builds a page by putting the parameters 
+    into the template '''
+    values = {
+        'content': content,
+        'title':   title,
+        'nav':     nav,
+        'date':    date,
+        'name':    name
+    }
+    return getTemplate().safe_substitute(values)
+
 def getTemplate():
+    ''' Returns the template object '''
     global template
     if template is None:
         with open('template.html') as inf:
@@ -96,5 +94,6 @@ def getTemplate():
     return template
 
 def savePage(page, name):
+    ''' Saves the page to a file '''
     with open('blog/' + name + '.html', 'w') as outf:
         outf.write(page)
