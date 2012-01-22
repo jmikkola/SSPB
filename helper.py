@@ -67,7 +67,7 @@ class Posts:
         dateField = line[:19]
         date = datetime.strptime(dateField, dtFormat)
         path, title = line[21:-1].split('","', 1)
-        self.add(date, path, title.replace('\"', '"'))
+        self.add(path, title.replace('\"', '"'), date)
 
     def add(self, path, title, date=None):
         ''' Adds an entry to the list '''
@@ -85,11 +85,10 @@ class Posts:
 
     def getRecent(self, max=None):
         ''' Returns info for recent posts '''
-        return self.posts[-max:] if max else self.posts
+        return self.posts[:-max:-1] if max else self.posts
         
     def save(self, path):
         ''' Saves the current list of posts to disk '''
-        self.posts.sort()
         with open(path, 'w') as outf:
             for (date,path,title) in self.posts:
                 outf.write(date.strftime(dtFormat))
@@ -159,7 +158,17 @@ def makeArchive(settings, posts):
 
 def makeArchiveContent(settings, posts):
     ''' Create the content of the archive page '''
-    return 'archive content goes here'
+    archive = ''
+    recent = posts.getRecent()
+    fmt = '<a href="{0}">{1}</a> <br />\n'
+    lastDate = None
+    for (date,path,title) in recent:
+        sdate = date.strftime('%B %d, %Y')
+        if sdate != lastDate:
+            lastDate = sdate
+            archive += '<h3>%s</h3>\n' % sdate
+        archive += fmt.format(getPostURL(path), title)
+    return archive
 
 def makeNav(settings, posts, before=None):
     ''' Create the navigation links '''
