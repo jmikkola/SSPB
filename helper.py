@@ -52,10 +52,38 @@ def makePage(postHtml, title, postName, settings, posts):
     savePage(page, postName)
 
 def makeIndex(settings, posts):
-    pass
+    content = makeIndexContent(settings, posts)
+    nav = makeNav(settings, posts)
+    name = settings.get('blog-name')
+    values = {
+        'content': content,
+        'title':   'Home',
+        'nav':     nav,
+        'date':    '',
+        'name':    name,
+    }
+    page = getTemplate().safe_substitute(values)
+    savePage(page, 'index')
+
+def makeIndexContent(settings, posts):
+    return 'index content goes here'
 
 def makeArchive(settings, posts):
-    pass
+    content = makeArchiveContent(settings, posts)
+    nav = makeNav(settings, posts)
+    name = settings.get('blog-name')
+    values = {
+        'content': content,
+        'title':   'Blog archive',
+        'nav':     nav,
+        'date':    '',
+        'name':    name,
+    }
+    page = getTemplate().safe_substitute(values)
+    savePage(page, 'archive')
+
+def makeArchiveContent(settings, posts):
+    return 'archive content goes here'
 
 def makeNav(settings, posts, before=None):
     return 'nav goes here'
