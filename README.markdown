@@ -82,10 +82,6 @@ These are some settings you can modify in settings.yaml.
   Set this to 0 to show no posts in the nav links, or to -1 to show
   all posts.
 
-- create-archive
-  Leave as yes to create an archive page, or set to no and the
-  archive page will not be created.
-
 - home-max-posts
   Set the maximum number of posts to show on the home page. 
 
