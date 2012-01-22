@@ -102,7 +102,7 @@ The first top-level heading becomes its title.
 
 When you are done writing the post, run (from the blog's directory):
 
-    $ sspb new posts/post_name.markdown
+    $ sspb new posts/post_name.markdown <title>
 
 This will update the contents of the blog/ directory, which you can
 then copy or rsync to the server.
@@ -127,9 +127,11 @@ Editing a post
 
 If you edit an existing post, you will need to run
 
-    $ sspb update posts/post_name.markdown
+    $ sspb update posts/post_name.markdown [title]
 
-in order to have the change reflected in the blog/ directory.
+in order to have the change reflected in the blog/
+directory. Including a new title is optional. If none is given, the
+old title will be used.  
 
 
 Changing settings or the template

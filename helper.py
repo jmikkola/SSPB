@@ -8,6 +8,8 @@ dtFormat = "%Y-%m-%d %H:%M:%S"
 template = None
 
 class Settings:
+    ''' This class stores the blog's settings. 
+    It's data is stored in settings.yaml '''
     def __init__(self, settingsPath=None):
         ''' Create a new instance of the settings class '''
         # set defaults
@@ -45,6 +47,58 @@ class Settings:
         s += 'home-max-posts: ' + str(self.home_max_posts) + '\n'
         return s
 
+class Posts:
+    ''' This class stores information about past posts.
+    It's data is stored in posts.dat '''
+    def __init__(self, postsPath=None):
+        ''' Creates a new instance of the Posts class '''
+        self.posts = []
+        if postsPath:
+            self.load(postsPath)
+            
+    def load(self, postsPath):
+        ''' Loads the list of posts from a file '''
+        with open(postsPath) as inf:
+            for line in inf:
+                self.addLine(line.rstrip())
+
+    def addLine(self, line):
+        ''' (Internal method) Reads in a line from posts.dat '''
+        dateField = line[:19]
+        date = datetime.strptime(dateField, dtFormat)
+        path, title = line[21:-1].split('","', 1)
+        self.add(date, path, title.replace('\"', '"'))
+
+    def add(self, path, title, date=None):
+        ''' Adds an entry to the list '''
+        if date is None:
+            date = datetime.now()
+        self.posts.append( (date,path,title) )
+
+    def getTitle(self, postPath):
+        ''' Gives the title of an existing post,
+        or None if the post cannot be found '''
+        for (date,path,title) in self.posts:
+            if path == postPath:
+                return title
+        return None
+
+    def getRecent(self, max=None):
+        ''' Returns info for recent posts '''
+        return self.posts[-max:] if max else self.posts
+        
+    def save(self, path):
+        ''' Saves the current list of posts to disk '''
+        self.posts.sort()
+        with open(path, 'w') as outf:
+            for (date,path,title) in self.posts:
+                outf.write(date.strftime(dtFormat))
+                outf.write(',"' + path + '","')
+                outf.write(title.replace('"', '\"') + '"\n')
+
+    def __str__(self):
+        return '\n'.join(self.posts)
+
 def getPostName(path):
     ''' Gets the post name out of the file
     name of the markdown file '''
@@ -57,7 +111,7 @@ def getPostURL(path):
     return getPostName(path) + '.html'
 
 def makePage(postHtml, title, postName, settings, posts):
-    ''' Create a page for a blog post '''
+    ''' Render page for a blog post '''
     date = datetime.now().strftime('%I:%M %p, %B %d, %Y')
     nav = makeNav(settings, posts)
     name = settings.blog_name
@@ -79,26 +133,18 @@ def makeIndexContent(settings, posts):
     if maxPosts is None or type(maxPosts) != int or maxPosts < 0:
         maxPosts = 1
     # Get content
-    recent = getRecentPosts(maxPosts)
-    content = ''
-    for postPath in recent:
-        content += getPost(postPath)
+    content = ''.join(map(getPost, posts.getRecent(maxPosts)))
     return content
 
-def getRecentPosts(maxPosts):
-    ''' Returns the path of the recent posts '''
-    with open('posts.dat') as inf:
-        lines = inf.readlines()
-    lines = lines[-maxPosts:]
-    return map(lambda l: l.rstrip()[20:], lines)
-
-def getPost(postPath):
+def getPost(postInfo):
     ''' Returns the summary or full content of a post 
     wrapped in a link to the post '''
-    return '<div class="post"> <a href="' + \
-        getPostURL(postPath) + '">\n' + \
-        getPostHtml(postPath) + \
-        '</a></div>\n'
+    date, path, title = postInfo
+    fmt = '''<div class="post">
+             <a href="{0}"><h2>{1}</h2></a>
+             {2}
+             </div> \n'''
+    return fmt.format(getPostURL(path), title, getPostHtml(path))
 
 def getPostHtml(postPath):
     ''' Loads the post's markdown from the path
@@ -117,7 +163,6 @@ def makeArchive(settings, posts):
 
 def makeArchiveContent(settings, posts):
     ''' Create the content of the archive page '''
-    recent = getRecentPosts(0)
     return 'archive content goes here'
 
 def makeNav(settings, posts, before=None):
