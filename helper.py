@@ -128,11 +128,7 @@ def makeIndex(settings, posts):
 
 def makeIndexContent(settings, posts):
     ''' Create the content of the index page '''
-    # Get settings
     maxPosts = settings.home_max_posts
-    if maxPosts is None or type(maxPosts) != int or maxPosts < 0:
-        maxPosts = 1
-    # Get content
     content = ''.join(map(getPost, posts.getRecent(maxPosts)))
     return content
 
@@ -167,7 +163,14 @@ def makeArchiveContent(settings, posts):
 
 def makeNav(settings, posts, before=None):
     ''' Create the navigation links '''
-    return 'nav goes here'
+    recent = posts.getRecent(settings.nav_max_posts)
+    fmt = '<a href="{0}">{1}</a>\n'
+    nav = fmt.format('index.html', 'Home')
+    nav += fmt.format('archive.html', 'Archive')
+    nav += '<hr />\n'
+    for (date,path,title) in recent:
+        nav += fmt.format(getPostURL(path), title)
+    return nav
 
 def buildPage(content, title, nav, date, name):
     ''' Builds a page by putting the parameters 
