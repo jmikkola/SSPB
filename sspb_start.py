@@ -4,6 +4,8 @@ import sys
 import os
 import shutil
 
+from helper import *
+
 def main(args):
     folder = args[0]
     blogname = ' '.join(args[1:])
@@ -35,10 +37,9 @@ def createSettings(cwd, blogname):
     ''' Creates the settings file '''
     path = os.path.join(cwd, 'settings.yaml')
     with open(path, 'w') as fout:
-        fout.write("blog-name: " + blogname + "\n")
-        fout.write("nav-max-posts: 10\n")
-        fout.write("create-archive: yes\n")
-        fout.write("home-max-posts: 3\n")
+        settings = Settings()
+        settings.blog_name = blogname
+        fout.write(str(settings))
 
 def createDirectories(cwd):
     ''' Creates the posts/ and blog/ directories '''
