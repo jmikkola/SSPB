@@ -10,6 +10,11 @@ def main(args):
     postPath = args[0]
     postTitle = ' '.join(args[1:])
 
+    # Make sure title is non-empty
+    if not postTitle:
+        print "No title given"
+        return
+
     # Make sure the file exists
     if not os.path.exists(postPath):
         print "Could not find file:", postPath

@@ -11,6 +11,10 @@ def main(args):
     blogname = ' '.join(args[1:])
     cwd = os.getcwd()
     
+    if not blogname:
+        print "No blog name given"
+        return
+    
     if checkExists(cwd):
         setupStructure(cwd, folder)
         createSettings(cwd, blogname)
