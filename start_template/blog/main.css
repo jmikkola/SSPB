@@ -51,3 +51,13 @@ div.main {
     text-align: justify;
     margin: 20px 0;
 }
+
+div.post {
+    margin: 20px 0;
+}
+
+div.post + div.post {
+    margin-top: 40px;
+    padding-top: 10px;
+    border-top: 1px solid #888;
+}
