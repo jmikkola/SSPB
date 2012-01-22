@@ -86,11 +86,6 @@ These are some settings you can modify in settings.yaml.
   Leave as yes to create an archive page, or set to no and the
   archive page will not be created.
 
-- home-posts-style
-  Set to none to show no posts on the home page, summary to show post
-  summaries on the home page, or full to show full posts on the home
-  page. 
-
 - home-max-posts
   Set the maximum number of posts to show on the home page. 
 

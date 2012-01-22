@@ -38,7 +38,6 @@ def createSettings(cwd, blogname):
         fout.write("blog-name: " + blogname + "\n")
         fout.write("nav-max-posts: 10\n")
         fout.write("create-archive: yes\n")
-        fout.write("home-posts-style: full\n")
         fout.write("home-max-posts: 3\n")
 
 def createDirectories(cwd):
