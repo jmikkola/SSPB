@@ -83,9 +83,18 @@ class Posts:
                 return title
         return None
 
+    def setTitle(self, postPath, newTitle):
+        ''' Changes the title of an existing post '''
+        for i in xrange(len(self.posts)):
+            (date,path,title) = self.posts[i]
+            if path == postPath:
+                self.posts[i] = (date,path,newTitle)
+                return True
+        return False
+
     def getRecent(self, max=None):
         ''' Returns info for recent posts '''
-        return self.posts[:-max:-1] if max else self.posts
+        return self.posts[:-max:-1] if max else self.posts[::-1]
         
     def save(self, path):
         ''' Saves the current list of posts to disk '''
