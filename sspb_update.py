@@ -17,9 +17,7 @@ def updateAll():
     posts = Posts('posts.dat')
     # Re-make post pages
     for (date,path,title) in posts.getRecent():
-        postHtml = getPostHtml(path)
-        postName = getPostName(path)
-        makePage(postHtml, title, postName, settings, posts)
+        makePage(path, settings, posts)
     # Re-make index and archive pages
     makeIndex(settings, posts)
     makeArchive(settings, posts)
@@ -36,11 +34,9 @@ def updatePost(args):
         updateTitle(posts, path, title)
         makeArchive(settings, posts)
     else:
-        title = posts.getTitle(path)
+        _, _, title = posts.getPost(path)
     # Re-create the page
-    postHtml = getPostHtml(path)
-    postName = getPostName(path)
-    makePage(postHtml, title, postName, settings, posts)
+    makePage(path, settings, posts)
     # Re-make index, just to be safe
     makeIndex(settings, posts)
     

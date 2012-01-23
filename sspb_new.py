@@ -29,9 +29,7 @@ def main(args):
     posts.save('posts.dat')
 
     # Create and save page
-    postHtml = getPostHtml(postPath)
-    postName = getPostName(postPath)
-    makePage(postHtml, postTitle, postName, settings, posts)
+    makePage(postPath, settings, posts)
 
     # Update other pages
     makeIndex(settings, posts)

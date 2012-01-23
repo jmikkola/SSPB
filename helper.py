@@ -75,12 +75,12 @@ class Posts:
             date = datetime.now()
         self.posts.append( (date,path,title) )
 
-    def getTitle(self, postPath):
-        ''' Gives the title of an existing post,
-        or None if the post cannot be found '''
-        for (date,path,title) in self.posts:
-            if path == postPath:
-                return title
+    def getPost(self, postPath):
+        ''' Returns the information tuple matching the 
+        postPath '''
+        for t in self.posts:
+            if t[1] == postPath:
+                return t
         return None
 
     def setTitle(self, postPath, newTitle):
@@ -127,12 +127,15 @@ def getPostName(path):
 def getPostURL(path):
     return getPostName(path) + '.html'
 
-def makePage(postHtml, title, postName, settings, posts):
+def makePage(postPath, settings, posts):
     ''' Render page for a blog post '''
-    date = datetime.now().strftime('%I:%M %p, %B %d, %Y')
+    date, _, title = posts.getPost(postPath)
+    dateText = date.strftime('%I:%M %p, %B %d, %Y')
+    postHtml = getPostHtml(postPath)
+    postName = getPostName(postPath)
     nav = makeNav(settings, posts)
-    name = settings.blog_name
-    page = buildPage(postHtml, title, nav, date, name)
+    blogName = settings.blog_name
+    page = buildPage(postHtml, title, nav, dateText, blogName)
     savePage(page, postName)
 
 def makeIndex(settings, posts):
