@@ -111,12 +111,6 @@ To remove an existing post, run
 
     $ sspb remove posts/post_name.markdown
 
-Note that this will not delete the post from posts/. You will have to
-do that manually. 
-
-If you do not manually remove the post's markdown file, the post will
-re-appear if you run the update command (below). 
-
 
 Editing a post
 --------------

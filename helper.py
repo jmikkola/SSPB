@@ -95,6 +95,15 @@ class Posts:
     def getRecent(self, max=None):
         ''' Returns info for recent posts '''
         return self.posts[:-max:-1] if max else self.posts[::-1]
+
+    def remove(self, postPath):
+        ''' Removes a post from the list '''
+        for i in xrange(len(self.posts)):
+            (date,path,title) = self.posts[i]
+            if path == postPath:
+                self.posts.pop(i)
+                return True
+        return False
         
     def save(self, path):
         ''' Saves the current list of posts to disk '''
