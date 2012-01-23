@@ -2,13 +2,14 @@
 SSPB - Super Simply Python Blog
 ===============================
 
-!!! NOTE: this is not yet in a working state !!!
-
 The main idea of SSPB is that you write you blog posts in markdown
 files, and use this script to convert those files, along with your
 template files, into HTML files that constitute your blog. 
 
 You then copy (or rsync) those files to your server. 
+
+This is not actually intended to be really used, it's just an amusing
+programming project. 
 
 
 Setup
