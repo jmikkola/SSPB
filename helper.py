@@ -120,8 +120,11 @@ def getPostName(path):
     ''' Gets the post name out of the file
     name of the markdown file '''
     basename = os.path.basename(path)
-    if basename.endswith(".markdown"):
-        basename = basename[:-9]
+    namePieces = basename.split('.')
+    if len(namePieces) > 1:
+        extension = namePieces[-1]
+        if extension in ['markdown', 'text', 'mkdn']:
+            basename = '.'.join(namePieces[:-1])
     return basename.replace(' ', '_')
 
 def getPostURL(path):
