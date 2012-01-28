@@ -170,7 +170,9 @@ def getPostHtml(postPath):
     and converts it to html '''
     with open(postPath) as inf:
         postText = inf.read()
-    return markdown.markdown(postText)
+    mkdn = markdown.markdown(postText)
+    mkdn = mkdn.replace('--', '&mdash;')
+    return mkdn
 
 def makeArchive(settings, posts):
     ''' Create the archive page '''
